@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy New Year </title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    html, body {
+        margin:0; padding:0;
+        width:100%; height:100%;
+        overflow:hidden;
+        background:white;
+        font-family: "Poppins", sans-serif;
+    }
+
+    #pink-area {
+        position:absolute;
+        top:0; left:0;
+        width:100%; height:100%;
+        pointer-events:none;
+    }
+
+    .heart {
+        position:absolute;
+        color:#ff4da6;
+        font-size:16px;
+        opacity:0;
+        transition:opacity 0.2s;
+    }
+
+    .white-heart {
+        position:absolute;
+        color:white;
+        font-size:18px;
+        opacity:0;
+        transition:opacity 0.2s;
+    }
+
+    #gif {
+        position:absolute;
+        top:10px;
+        width:100%;
+        text-align:center;
+        z-index:5;
+        opacity:1;
+    }
+
+    #gif img {
+        width:65%;
+        max-width:350px;
+    }
+
+    #message {
+        position:absolute;
+        width:90%;
+        left:5%;
+        top:60%;
+        text-align:center;
+        font-size:19px;
+        color:white;
+        opacity:0;
+        transition:opacity 2.5s ease-in-out, font-weight 2s ease-in;
+    }
+
+    #message.bold {
+        font-weight:700;
+        text-shadow:0px 0px 8px rgba(255,255,255,0.75);
+    }
+</style>
+</head>
+
+<body>
+
+<div id="gif">
+    <img src="https://www.wordsjustforyou.com/wp-content/uploads/2025/12/Happy-New-Year-2026-GIF-77703291225.gif">
+</div>
+
+<div id="pink-area"></div>
+<div id="message">
+    this year 2025 was full of struggles for me ,<br>
+    but ur presence made it the most important and beautiful year of my life .<br>
+    Your presence is so so so special for me ....<br>
+    May god bless me to manifest at least 60 more new years with you ..<br><br>
+    I love you so much  ...<br>
+    <b>Happy new year sweetheart </b>
+</div>
+
+<script>
+let w = window.innerWidth;
+let h = window.innerHeight;
+let container = document.getElementById("pink-area");
+
+// STEP 1 — Generate pink hearts (~2000)
+let total = 2000;
+let hearts = [];
+for(let i=0;i<total;i++){
+    let e = document.createElement("div");
+    e.className = "heart";
+    e.innerHTML = "";
+    e.style.left = Math.random()*w + "px";
+    e.style.top = Math.random()*h + "px";
+    container.appendChild(e);
+    hearts.push(e);
+}
+
+let i = 0;
+let interval = setInterval(()=>{
+    hearts[i].style.opacity = 1;
+    i++;
+    if(i >= hearts.length) {
+        clearInterval(interval);
+        createBorder();
+    }
+}, 2);  // HEART SPEED
+
+// STEP 2 — Create white heart border
+function createBorder(){
+    let borderHearts = [];
+    let size = 22; // spacing
+    // TOP
+    for(let x=0; x<w; x+=size){
+        borderHearts.push({x:x, y:0});
+    }
+    // RIGHT
+    for(let y=0; y<h; y+=size){
+        borderHearts.push({x:w-size, y:y});
+    }
+    // BOTTOM
+    for(let x=0; x<w; x+=size){
+        borderHearts.push({x:x, y:h-size});
+    }
+    // LEFT
+    for(let y=0; y<h; y+=size){
+        borderHearts.push({x:0, y:y});
+    }
+
+    let j = 0;
+    let interval2 = setInterval(()=>{
+        let p = borderHearts[j];
+        let e = document.createElement("div");
+        e.className = "white-heart";
+        e.innerHTML = "";
+        e.style.left = p.x + "px";
+        e.style.top = p.y + "px";
+        container.appendChild(e);
+        setTimeout(()=>{ e.style.opacity = 1; }, 20);
+        j++;
+        if(j >= borderHearts.length){
+            clearInterval(interval2);
+            showMessage();
+        }
+    }, 11); // BORDER SPEED
+}
+
+// STEP 3 — Message animation
+function showMessage(){
+    let msg = document.getElementById("message");
+    msg.style.opacity = 1; // fade
+    setTimeout(()=>{ msg.classList.add("bold"); }, 3000);
+}
+</script>
+
+</body>
+</html>
